@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark" style="color-scheme: dark;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>شناسنامه دانشنامه فندوم</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+    html, body {
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      color-scheme: dark !important;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #070b14; }
+    ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-[#070b14] text-slate-100 min-h-screen antialiased flex flex-col">
+
+  <header class="sticky top-0 z-50 bg-[#0d1322]/90 backdrop-blur-md border-b border-slate-800 px-6 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-2 text-xs font-bold text-sky-400 hover:text-sky-300 transition">
+        ← بازگشت به صفحه اصلی دانشنامه
+      </a>
+      <span id="chapterBadge" class="text-xs font-mono text-slate-400 bg-slate-900 px-3 py-1 rounded-md border border-slate-800"></span>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6">
+    <div id="loadingBox" class="text-center py-20 text-sky-400 text-sm">⏳ در حال بارگذاری اطلاعات دانشنامه...</div>
+
+    <div id="articleContent" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+      <!-- ستون محتوا (راست) -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="space-y-2">
+          <div class="flex items-center gap-3 flex-wrap">
+            <h1 id="titleFa" class="text-3xl sm:text-4xl font-black text-white"></h1>
+            <span id="titleZh" class="text-lg font-mono text-slate-400"></span>
+            <span id="categoryBadge" class="text-xs px-2.5 py-0.5 rounded-full font-bold bg-sky-950 text-sky-400 border border-sky-800/60"></span>
+          </div>
+          <div id="aliasesBox" class="text-xs text-slate-400 flex flex-wrap gap-1.5 items-center pt-1"></div>
+        </div>
+
+        <!-- تب‌های مقاله -->
+        <div class="flex items-center gap-2 border-b border-slate-800 text-xs font-bold">
+          <button class="article-tab-btn pb-2.5 px-3 border-b-2 border-sky-500 text-sky-400 font-bold" data-target="tab-overview" onclick="switchTab('tab-overview', this)">📖 سرگذشت و چکیده</button>
+          <button class="article-tab-btn pb-2.5 px-3 border-b-2 border-transparent text-slate-400 hover:text-white" data-target="tab-timeline" onclick="switchTab('tab-timeline', this)">📍 خط زمانی وقایع (<span id="timelineCount">0</span>)</button>
+          <button class="article-tab-btn pb-2.5 px-3 border-b-2 border-transparent text-slate-400 hover:text-white" data-target="tab-relationships" onclick="switchTab('tab-relationships', this)">🔗 شبکه روابط و تبارشناسی (<span id="relCount">0</span>)</button>
+        </div>
+
+        <!-- تب ۱: سرگذشت -->
+        <div id="tab-overview" class="tab-pane space-y-4">
+          <div class="bg-[#111827] border border-slate-800 rounded-xl p-5 shadow-lg space-y-3">
+            <h3 class="text-xs font-bold text-sky-400 uppercase tracking-wide">چکیده سرگذشت و رویدادهای فصلی</h3>
+            <div id="descriptionText" class="text-xs sm:text-sm text-slate-300 leading-relaxed space-y-2"></div>
+          </div>
+        </div>
+
+        <!-- تب ۲: خط زمانی -->
+        <div id="tab-timeline" class="tab-pane hidden space-y-4">
+          <div id="timelineList" class="relative pl-2 pr-4 border-r-2 border-sky-500/40 space-y-6"></div>
+        </div>
+
+        <!-- تب ۳: روابط ۸‌گانه -->
+        <div id="tab-relationships" class="tab-pane hidden space-y-4">
+          <div class="bg-[#111827] border border-slate-800 rounded-xl p-3.5 shadow space-y-3">
+            <input type="text" id="relSearchInput" placeholder="🔍 جستجوی نام شخص یا رویداد در پیوندها..." onkeyup="filterRels()" class="w-full bg-[#070b14] border border-slate-800 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-sky-500">
+            <div id="relFiltersBox" class="flex flex-wrap gap-1.5 text-[11px]"></div>
+          </div>
+          <div id="relationshipsList" class="grid grid-cols-1 gap-2.5"></div>
+        </div>
+      </div>
+
+      <!-- جعبه شناسنامه چپ (Infobox) -->
+      <div class="lg:sticky lg:top-20 space-y-4">
+        <div class="bg-[#111827] border border-slate-800 rounded-2xl overflow-hidden shadow-2xl">
+          <div class="bg-gradient-to-r from-sky-950 via-indigo-950 to-slate-900 p-5 border-b border-slate-800 text-center space-y-1">
+            <h3 id="infoTitle" class="font-extrabold text-lg text-white"></h3>
+            <p id="infoPinyin" class="text-xs font-mono text-sky-300"></p>
+          </div>
+
+          <div class="p-4 space-y-3 text-xs divide-y divide-slate-800/60">
+            <div class="flex justify-between items-center pt-2"><span class="text-slate-400">هویت / کالبد:</span><span id="infoIdentity" class="font-bold text-slate-200"></span></div>
+            <div class="flex justify-between items-center pt-2"><span class="text-slate-400">جنسیت:</span><span id="infoGender" class="font-bold"></span></div>
+            <div class="flex justify-between items-center pt-2"><span class="text-slate-400">سن:</span><span id="infoAge" class="font-bold text-slate-200"></span></div>
+            <div class="flex justify-between items-center pt-2"><span class="text-slate-400">قلمرو کنونی:</span><span id="infoRealm" class="font-bold text-sky-400"></span></div>
+            <div class="flex justify-between items-center pt-2"><span class="text-slate-400">قلمرو نخستین:</span><span id="infoFirstRealm" class="font-bold text-slate-300"></span></div>
+            <div class="flex justify-between items-center pt-2"><span class="text-slate-400">جهش‌های قدرت:</span><span id="infoBreakthroughs" class="font-bold text-amber-400 font-mono"></span></div>
+            <div class="flex justify-between items-center pt-2"><span class="text-slate-400">فرقه / وابستگی:</span><span id="infoAffil" class="font-bold text-slate-200"></span></div>
+            <div class="flex justify-between items-center pt-2"><span class="text-slate-400">وضعیت زیستی:</span><span id="infoStatus"></span></div>
+            <div id="infoTechFields" class="space-y-2.5 pt-2"></div>
+            <div class="flex justify-between items-center pt-2 text-[11px] text-slate-500 font-mono"><span>نخستین حضور:</span><span id="infoFirstCh"></span></div>
+            <div class="flex justify-between items-center pt-2 text-[11px] text-slate-500 font-mono"><span>آخرین حضور:</span><span id="infoLastCh"></span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const EVENT_MAP = {
+      'INITIAL': 'نخستین معرفی',
+      'BREAKTHROUGH': 'جهش و ارتقای قلمرو',
+      'AFFILIATION': 'تغییر فرقه و وفاداری',
+      'STATUS': 'دگرگونی وضعیت',
+      'MILESTONE': 'واقعه سرنوشت‌ساز',
+      'DEATH': 'مرگ و شهادت',
+      'UPDATE': 'تحول وضعیت'
+    };
+
+    const REL_CATEGORIES = {
+      'all': { label: 'همه پیوندها', color: 'bg-sky-600 text-white' },
+      'family': { label: '👨‍👩‍👧 خانوادگی و نسبی', color: 'bg-rose-950 text-rose-300 border-rose-800' },
+      'mentorship': { label: '🎓 استاد و شاگردی', color: 'bg-violet-950 text-violet-300 border-violet-800' },
+      'social': { label: '🤝 اجتماعی و رقابتی', color: 'bg-blue-950 text-blue-300 border-blue-800' },
+      'political': { label: '🏯 سازمانی و فرقه', color: 'bg-emerald-950 text-emerald-300 border-emerald-800' },
+      'spiritual': { label: '⚔️ رزمی و معنوی', color: 'bg-amber-950 text-amber-300 border-amber-800' },
+      'identity': { label: '🪞 هویت و کالبد', color: 'bg-pink-950 text-pink-300 border-pink-800' },
+      'narrative': { label: '📜 روایی و حوادث', color: 'bg-cyan-950 text-cyan-300 border-cyan-800' }
+    };
+
+    let cachedRelationships = [];
+    let activeRelCategory = 'all';
+
+    async function loadWikiArticle() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      if (!id) { window.location.href = 'index.html'; return; }
+
+      try {
+        const res = await fetch(`data/entities/${encodeURIComponent(id)}.json`);
+        if (!res.ok) throw new Error("مدخل یافت نشد");
+        const data = await res.json();
+        const ent = data.entity;
+
+        document.title = `${ent.fa} - دانشنامه فندوم`;
+        document.getElementById('chapterBadge').innerText = `حضور در فصول: ${ent.first_chapter} تا ${ent.last_chapter}`;
+        document.getElementById('titleFa').innerText = ent.fa;
+        document.getElementById('titleZh').innerText = ent.zh;
+        document.getElementById('categoryBadge').innerText = ent.category;
+
+        // القاب
+        if (data.aliases && data.aliases.length > 0) {
+          document.getElementById('aliasesBox').innerHTML = '<span>القاب:</span>' + 
+            data.aliases.map(a => `<span class="bg-slate-900 text-slate-300 px-2 py-0.5 rounded border border-slate-800 text-[11px]">${a.alias}</span>`).join('');
+        }
+
+        // شناسنامه (Infobox)
+        document.getElementById('infoTitle').innerText = ent.fa;
+        document.getElementById('infoPinyin').innerText = ent.pinyin || ent.zh;
+        document.getElementById('infoIdentity').innerText = ent.identity_type || 'اصلی';
+        document.getElementById('infoGender').innerHTML = ent.gender === 'مرد' ? '<span class="text-sky-400">♂ مرد</span>' : (ent.gender === 'زن' ? '<span class="text-pink-400">♀ زن</span>' : 'نامشخص');
+        document.getElementById('infoAge').innerText = ent.age || 'نامشخص';
+        document.getElementById('infoRealm').innerText = `${ent.current_realm} ${ent.current_sub_stage || ''}`;
+        document.getElementById('infoFirstRealm').innerText = `${ent.first_realm_display} (فصل ${ent.first_realm_chapter})`;
+        document.getElementById('infoBreakthroughs').innerText = `${ent.breakthrough_count} جهش`;
+        document.getElementById('infoAffil').innerText = ent.current_affiliation || 'مستقل';
+        document.getElementById('infoStatus').innerHTML = `<span class="px-2 py-0.5 rounded font-bold ${ent.current_status === 'متوفی' ? 'bg-red-950 text-red-400' : 'bg-emerald-950 text-emerald-400'}">${ent.current_status}</span>`;
+        document.getElementById('infoFirstCh').innerText = `فصل ${ent.first_chapter}`;
+        document.getElementById('infoLastCh').innerText = `فصل ${ent.last_chapter}`;
+
+        // مشخصات فنی سلاح
+        const techBox = document.getElementById('infoTechFields');
+        let techHtml = '';
+        if (ent.item_grade) techHtml += `<div class="flex justify-between items-center"><span class="text-slate-400">رتبه فنی:</span><span class="font-bold text-amber-400">${ent.item_grade}</span></div>`;
+        if (ent.element_type) techHtml += `<div class="flex justify-between items-center"><span class="text-slate-400">طبع / عنصر:</span><span class="font-bold text-purple-400">${ent.element_type}</span></div>`;
+        if (ent.function_effect) techHtml += `<div class="flex justify-between items-center"><span class="text-slate-400">اثر اصلی:</span><span class="font-bold text-slate-200">${ent.function_effect}</span></div>`;
+        techBox.innerHTML = techHtml;
+
+        // سرگذشت
+        const descBox = document.getElementById('descriptionText');
+        if (ent.description) {
+          descBox.innerHTML = ent.description.split('|').map(s => `<span class="block py-1 border-b border-slate-800/40 last:border-0">${s.trim()}</span>`).join('');
+        } else {
+          descBox.innerHTML = '<span class="text-slate-500">توضیحات تکمیلی ثبت نشده است.</span>';
+        }
+
+        // خط زمانی
+        document.getElementById('timelineCount').innerText = data.history.length;
+        const tlList = document.getElementById('timelineList');
+        tlList.innerHTML = data.history.map(h => `
+          <div class="relative group space-y-1.5">
+            <div class="absolute -right-[23px] top-1.5 w-3.5 h-3.5 rounded-full bg-sky-500 border-2 border-[#111827] shadow shadow-sky-500/50"></div>
+            <div class="flex items-center gap-2">
+              <span class="font-mono text-xs font-bold text-amber-400 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-800/60">فصل ${h.chapter}</span>
+              <span class="text-[11px] font-bold text-sky-400 bg-sky-950/80 px-2 py-0.5 rounded border border-sky-800/60">${EVENT_MAP[h.event_type] || h.event_type}</span>
+              <span class="text-[10px] text-slate-500">${h.status}</span>
+            </div>
+            <div class="bg-[#111827] border border-slate-800 rounded-lg p-3.5 space-y-1.5 shadow">
+              <div class="text-xs font-semibold text-slate-200">
+                قلمرو: <b class="text-sky-400">${h.realm_name}</b> ${h.sub_stage ? `(${h.sub_stage})` : ''} 
+                <span class="text-slate-500">|</span> فرقه: <b>${h.affiliation}</b>
+              </div>
+              ${h.age && h.age !== 'نامشخص' ? `<div class="text-xs text-slate-400">🎂 سن: <b class="text-slate-200">${h.age}</b></div>` : ''}
+              ${h.appearance ? `<div class="text-xs text-slate-400">👤 سیما و ظاهر: <span class="text-slate-300 italic">${h.appearance}</span></div>` : ''}
+              ${h.milestone_desc ? `<div class="text-xs text-slate-300 bg-[#070b14] p-2 rounded border border-slate-800/80 leading-relaxed">${h.milestone_desc}</div>` : ''}
+            </div>
+          </div>
+        `).join('');
+
+        // روابط ۸‌گانه
+        cachedRelationships = data.grouped_relationships || [];
+        document.getElementById('relCount').innerText = cachedRelationships.length;
+
+        const filtersBox = document.getElementById('relFiltersBox');
+        filtersBox.innerHTML = Object.keys(REL_CATEGORIES).map(k => `
+          <button onclick="setRelCategory('${k}', this)" class="rel-btn px-3 py-1 rounded-md font-medium text-xs border ${k === 'all' ? 'bg-sky-600 text-white border-sky-500' : 'bg-[#070b14] text-slate-400 border-slate-800'}">
+            ${REL_CATEGORIES[k].label}
+          </button>
+        `).join('');
+
+        renderRelationships();
+
+        document.getElementById('loadingBox').classList.add('hidden');
+        document.getElementById('articleContent').classList.remove('hidden');
+
+      } catch (err) {
+        document.getElementById('loadingBox').innerHTML = `<div class="text-red-400">خطا: ${err.message}</div>`;
+      }
+    }
+
+    function setRelCategory(cat, btn) {
+      activeRelCategory = cat;
+      document.querySelectorAll('.rel-btn').forEach(b => {
+        b.className = 'rel-btn px-3 py-1 rounded-md font-medium text-xs border bg-[#070b14] text-slate-400 border-slate-800';
+      });
+      btn.className = 'rel-btn px-3 py-1 rounded-md font-bold text-xs border bg-sky-600 text-white border-sky-500';
+      filterRels();
+    }
+
+    function renderRelationships() {
+      const list = document.getElementById('relationshipsList');
+      list.innerHTML = cachedRelationships.map(gr => {
+        const stepsHtml = gr.history.map(step => `
+          <div class="py-1.5 border-b border-slate-800/60 last:border-0 space-y-1">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-amber-400 font-mono">فصل ${step.chapter}: ${step.target_role || step.role}</span>
+              <span class="text-[10px] text-slate-400">نقش من: ${step.role}</span>
+            </div>
+            ${step.reason ? `<div class="text-[11px] text-sky-300 bg-slate-900 px-2 py-1 rounded border border-slate-800">💡 علت: ${step.reason}</div>` : ''}
+          </div>
+        `).join('');
+
+        return `
+          <div class="rel-card bg-[#111827] border border-slate-800 rounded-lg overflow-hidden shadow" data-cats="${gr.categories.join(',')}" data-text="${(gr.target_fa + ' ' + gr.latest_role).toLowerCase()}">
+            <div class="p-3 bg-slate-900/80 hover:bg-slate-800/80 transition flex items-center justify-between cursor-pointer" onclick="toggleAccordion(this)">
+              <div class="flex items-center gap-2">
+                <a href="wiki.html?id=${encodeURIComponent(gr.target_zh)}" onclick="event.stopPropagation()" class="text-xs font-bold text-sky-400 hover:text-sky-300 hover:underline">
+                  🔗 ${gr.target_fa}
+                </a>
+                <span class="text-[11px] text-slate-400">(${gr.latest_role})</span>
+              </div>
+              <div class="flex items-center gap-2 text-xs">
+                <span class="text-[10px] text-slate-400 bg-slate-800 px-2 py-0.5 rounded">${gr.history.length} رویداد</span>
+                <span class="acc-arrow text-slate-400">▾</span>
+              </div>
+            </div>
+            <div class="hidden p-3 bg-[#070b14] border-t border-slate-800 space-y-2">
+              ${stepsHtml}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function filterRels() {
+      const q = document.getElementById('relSearchInput').value.trim().toLowerCase();
+      document.querySelectorAll('.rel-card').forEach(card => {
+        const cats = card.getAttribute('data-cats').split(',');
+        const text = card.getAttribute('data-text');
+
+        const catMatch = (activeRelCategory === 'all' || cats.includes(activeRelCategory));
+        const textMatch = (q === '' || text.includes(q));
+
+        card.style.display = (catMatch && textMatch) ? '' : 'none';
+      });
+    }
+
+    function toggleAccordion(header) {
+      const details = header.nextElementSibling;
+      const arrow = header.querySelector('.acc-arrow');
+      if (details.classList.contains('hidden')) {
+        details.classList.remove('hidden');
+        arrow.innerText = '▴';
+      } else {
+        details.classList.add('hidden');
+        arrow.innerText = '▾';
+      }
+    }
+
+    function switchTab(tabId, btn) {
+      document.querySelectorAll('.article-tab-btn').forEach(b => {
+        b.className = 'article-tab-btn pb-2.5 px-3 border-b-2 border-transparent text-slate-400 hover:text-white';
+      });
+      btn.className = 'article-tab-btn pb-2.5 px-3 border-b-2 border-sky-500 text-sky-400 font-bold';
+
+      document.querySelectorAll('.tab-pane').forEach(c => {
+        c.classList.toggle('hidden', c.id !== tabId);
+      });
+    }
+
+    loadWikiArticle();
+  </script>
+</body>
+</html>

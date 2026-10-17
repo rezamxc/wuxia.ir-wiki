@@ -1,0 +1,397 @@
+{
+  "chapters": 2067,
+  "entities": 1190,
+  "characters": 511,
+  "artifacts": 253,
+  "techniques": 206,
+  "locations": 120,
+  "factions": 68,
+  "relationships": 2088,
+  "realm_stats": [
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 60,
+      "cnt": 4
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 59,
+      "cnt": 3
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 58,
+      "cnt": 5
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 57,
+      "cnt": 4
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 56,
+      "cnt": 6
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 55,
+      "cnt": 4
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 54,
+      "cnt": 5
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 50,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 48,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 45,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 28,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 17,
+      "cnt": 5
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 16,
+      "cnt": 9
+    },
+    {
+      "current_realm": "خدای باستانی",
+      "current_realm_order": 16,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 15,
+      "cnt": 11
+    },
+    {
+      "current_realm": "پرسش تائو",
+      "current_realm_order": 15,
+      "cnt": 8
+    },
+    {
+      "current_realm": "فانی",
+      "current_realm_order": 15,
+      "cnt": 1
+    },
+    {
+      "current_realm": "خدای باستانی",
+      "current_realm_order": 15,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 14,
+      "cnt": 24
+    },
+    {
+      "current_realm": "پرسش تائو",
+      "current_realm_order": 14,
+      "cnt": 1
+    },
+    {
+      "current_realm": "موهوم و حقیقی یین و یانگ",
+      "current_realm_order": 14,
+      "cnt": 1
+    },
+    {
+      "current_realm": "خدای باستانی",
+      "current_realm_order": 14,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 13,
+      "cnt": 21
+    },
+    {
+      "current_realm": "پرسش تائو",
+      "current_realm_order": 13,
+      "cnt": 7
+    },
+    {
+      "current_realm": "تباهی آسمان و انسان",
+      "current_realm_order": 13,
+      "cnt": 6
+    },
+    {
+      "current_realm": "موهوم و حقیقی یین و یانگ",
+      "current_realm_order": 13,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 12,
+      "cnt": 18
+    },
+    {
+      "current_realm": "دگرگونی نوزاد",
+      "current_realm_order": 12,
+      "cnt": 6
+    },
+    {
+      "current_realm": "خدای باستانی",
+      "current_realm_order": 12,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 11,
+      "cnt": 13
+    },
+    {
+      "current_realm": "دگرگونی نوزاد",
+      "current_realm_order": 11,
+      "cnt": 5
+    },
+    {
+      "current_realm": "پاکسازی نیروانا",
+      "current_realm_order": 11,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فانی",
+      "current_realm_order": 11,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 10,
+      "cnt": 26
+    },
+    {
+      "current_realm": "دگرگونی نوزاد",
+      "current_realm_order": 10,
+      "cnt": 3
+    },
+    {
+      "current_realm": "پاکسازی نیروانا",
+      "current_realm_order": 10,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 9,
+      "cnt": 24
+    },
+    {
+      "current_realm": "موهوم و حقیقی یین و یانگ",
+      "current_realm_order": 9,
+      "cnt": 16
+    },
+    {
+      "current_realm": "شکست نیروانا",
+      "current_realm_order": 9,
+      "cnt": 2
+    },
+    {
+      "current_realm": "تحول روح",
+      "current_realm_order": 9,
+      "cnt": 2
+    },
+    {
+      "current_realm": "تشکیل هسته",
+      "current_realm_order": 9,
+      "cnt": 1
+    },
+    {
+      "current_realm": "پرسش تائو",
+      "current_realm_order": 8,
+      "cnt": 6
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 8,
+      "cnt": 5
+    },
+    {
+      "current_realm": "موهوم و حقیقی یین و یانگ",
+      "current_realm_order": 8,
+      "cnt": 3
+    },
+    {
+      "current_realm": "تحول روح",
+      "current_realm_order": 8,
+      "cnt": 2
+    },
+    {
+      "current_realm": "پاکسازی نیروانا",
+      "current_realm_order": 8,
+      "cnt": 1
+    },
+    {
+      "current_realm": "نامشخص (فراتر از پرسش تائو)",
+      "current_realm_order": 8,
+      "cnt": 1
+    },
+    {
+      "current_realm": "پرسش تائو",
+      "current_realm_order": 7,
+      "cnt": 3
+    },
+    {
+      "current_realm": "موهوم و حقیقی یین و یانگ",
+      "current_realm_order": 7,
+      "cnt": 3
+    },
+    {
+      "current_realm": "فراتر از پرسش تائو",
+      "current_realm_order": 7,
+      "cnt": 2
+    },
+    {
+      "current_realm": "خدای باستانی",
+      "current_realm_order": 7,
+      "cnt": 2
+    },
+    {
+      "current_realm": "دیدار نیروانا",
+      "current_realm_order": 7,
+      "cnt": 1
+    },
+    {
+      "current_realm": "تحول روح",
+      "current_realm_order": 7,
+      "cnt": 1
+    },
+    {
+      "current_realm": "پرسش تائو",
+      "current_realm_order": 6,
+      "cnt": 18
+    },
+    {
+      "current_realm": "دگرگونی نوزاد",
+      "current_realm_order": 6,
+      "cnt": 11
+    },
+    {
+      "current_realm": "موهوم و حقیقی یین و یانگ",
+      "current_realm_order": 6,
+      "cnt": 10
+    },
+    {
+      "current_realm": "نامشخص (فراتر از دگرگونی نوزاد)",
+      "current_realm_order": 6,
+      "cnt": 1
+    },
+    {
+      "current_realm": "تغییر نوزاد",
+      "current_realm_order": 6,
+      "cnt": 1
+    },
+    {
+      "current_realm": "تحول روح",
+      "current_realm_order": 6,
+      "cnt": 1
+    },
+    {
+      "current_realm": "تجسد نوزاد",
+      "current_realm_order": 6,
+      "cnt": 1
+    },
+    {
+      "current_realm": "تحول روح",
+      "current_realm_order": 5,
+      "cnt": 30
+    },
+    {
+      "current_realm": "دگرگونی نوزاد",
+      "current_realm_order": 5,
+      "cnt": 14
+    },
+    {
+      "current_realm": "پرسش تائو",
+      "current_realm_order": 5,
+      "cnt": 8
+    },
+    {
+      "current_realm": "جانور معنوی",
+      "current_realm_order": 5,
+      "cnt": 1
+    },
+    {
+      "current_realm": "تجسد نوزاد",
+      "current_realm_order": 5,
+      "cnt": 1
+    },
+    {
+      "current_realm": "تجسد نوزاد",
+      "current_realm_order": 4,
+      "cnt": 28
+    },
+    {
+      "current_realm": "دگرگونی نوزاد",
+      "current_realm_order": 4,
+      "cnt": 1
+    },
+    {
+      "current_realm": "خدای باستانی",
+      "current_realm_order": 4,
+      "cnt": 1
+    },
+    {
+      "current_realm": "تشکیل هسته",
+      "current_realm_order": 3,
+      "cnt": 26
+    },
+    {
+      "current_realm": "نوزاد اصل",
+      "current_realm_order": 3,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فانی",
+      "current_realm_order": 3,
+      "cnt": 1
+    },
+    {
+      "current_realm": "بنیادگذاری پی",
+      "current_realm_order": 2,
+      "cnt": 17
+    },
+    {
+      "current_realm": "تراکم چی",
+      "current_realm_order": 1,
+      "cnt": 23
+    },
+    {
+      "current_realm": "فانی",
+      "current_realm_order": 1,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فانی",
+      "current_realm_order": 0,
+      "cnt": 21
+    },
+    {
+      "current_realm": "نامشخص (کالبد جاودانه)",
+      "current_realm_order": 0,
+      "cnt": 1
+    },
+    {
+      "current_realm": "فانی (دارای رگه معنوی)",
+      "current_realm_order": 0,
+      "cnt": 1
+    }
+  ]
+}

@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark" style="color-scheme: dark;">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>دانشنامه جامع فندوم رمان</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap');
+    html, body, select, option {
+      font-family: 'Vazirmatn', Tahoma, sans-serif;
+      color-scheme: dark !important;
+    }
+    select option {
+      background-color: #111827 !important;
+      color: #f8fafc !important;
+      padding: 8px;
+    }
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #070b14; }
+    ::-webkit-scrollbar-thumb { background: #1f2937; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-[#070b14] text-slate-100 min-h-screen antialiased flex flex-col selection:bg-sky-500 selection:text-white">
+
+  <!-- هدر شیشه‌ای -->
+  <header class="sticky top-0 z-50 bg-[#0d1322]/90 backdrop-blur-md border-b border-slate-800 px-6 py-3.5">
+    <div class="max-w-7xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 via-indigo-600 to-amber-500 flex items-center justify-center font-black text-white text-xl shadow-lg shadow-sky-500/20">
+          仙
+        </div>
+        <div>
+          <h1 class="text-base font-extrabold text-white tracking-wide">دانشنامه رسمی جهان رمان</h1>
+          <p class="text-[11px] text-slate-400">مرجع رسمی تبارشناسی، گنجینه‌ها و خط زمانی ۲۰۰۰ فصل</p>
+        </div>
+      </div>
+
+      <nav class="hidden md:flex items-center gap-6 text-xs font-semibold text-slate-300">
+        <a href="#search-section" class="hover:text-sky-400 transition">🔍 جستجو</a>
+        <a href="#cultivation-ladder" class="hover:text-sky-400 transition">⚡ نردبان قدرت</a>
+        <a href="#featured-section" class="hover:text-sky-400 transition">⭐ چهره‌های شاخص</a>
+        <a href="#catalog-section" class="hover:text-sky-400 transition">📚 آرشیو کامل</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- بخش Hero با جستجوی لحظه‌ای بدون لگ -->
+  <section class="relative py-16 px-6 overflow-hidden border-b border-slate-800/80 bg-gradient-to-b from-[#0d1322] via-[#090d18] to-[#070b14]">
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(14,165,233,0.12),transparent_50%)]"></div>
+    
+    <div class="max-w-4xl mx-auto text-center relative z-10 space-y-6">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-950/80 border border-sky-800/60 text-sky-400 text-xs font-bold tracking-wide shadow-inner">
+        <span>✨ پایگاه دانش فندوم استاتیک (بدون سرور)</span>
+        <span class="w-1.5 h-1.5 rounded-full bg-sky-400 animate-pulse"></span>
+      </div>
+
+      <h2 class="text-3xl sm:text-5xl font-black text-white tracking-tight leading-tight">
+        جهان بیکران نامیرایان را <span class="bg-gradient-to-r from-sky-400 via-teal-300 to-amber-400 bg-clip-text text-transparent">کاوش کنید</span>
+      </h2>
+      <p class="text-xs sm:text-sm text-slate-400 max-w-2xl mx-auto leading-relaxed">
+        تحلیل پیوسته و هوشمند سرگذشت، نردبان تهذیب نفس، پیوندهای خونی و طالع تمام شخصیت‌ها در بیش از ۲۰۰۰ فصل از آغاز تا فرجام.
+      </p>
+
+      <!-- جعبه جستجوی زنده -->
+      <div id="search-section" class="relative max-w-2xl mx-auto pt-2">
+        <div class="relative">
+          <input type="text" id="liveSearchInput" placeholder="جستجوی آنی هر شخصیت، گنجینه، فرقه یا مکان (فارسی یا چینی)..." 
+                 class="w-full bg-[#111827] border-2 border-slate-700/80 rounded-2xl px-5 py-4 text-sm text-white placeholder-slate-500 shadow-2xl focus:outline-none focus:border-sky-500 transition">
+          <div class="absolute left-4 top-4 text-slate-500 text-lg">🔍</div>
+        </div>
+
+        <div id="liveSearchResults" class="hidden absolute left-0 right-0 top-full mt-2 bg-[#111827] border border-slate-700 rounded-xl shadow-2xl overflow-hidden z-50 divide-y divide-slate-800 text-right"></div>
+      </div>
+
+      <!-- آمار کلی -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-6 max-w-3xl mx-auto">
+        <div class="bg-[#111827]/70 border border-slate-800/80 rounded-xl p-3.5 shadow text-center">
+          <div class="text-xs text-slate-400">چپترهای بررسی‌شده</div>
+          <div id="statChapters" class="text-2xl font-black text-sky-400 font-mono mt-1">...</div>
+        </div>
+        <div class="bg-[#111827]/70 border border-slate-800/80 rounded-xl p-3.5 shadow text-center">
+          <div class="text-xs text-slate-400">شخصیت‌های با شناسنامه</div>
+          <div id="statCharacters" class="text-2xl font-black text-emerald-400 font-mono mt-1">...</div>
+        </div>
+        <div class="bg-[#111827]/70 border border-slate-800/80 rounded-xl p-3.5 shadow text-center">
+          <div class="text-xs text-slate-400">سلاح و گنجینه‌ها</div>
+          <div id="statArtifacts" class="text-2xl font-black text-amber-400 font-mono mt-1">...</div>
+        </div>
+        <div class="bg-[#111827]/70 border border-slate-800/80 rounded-xl p-3.5 shadow text-center">
+          <div class="text-xs text-slate-400">فنون و مهارت‌ها</div>
+          <div id="statTechniques" class="text-2xl font-black text-purple-400 font-mono mt-1">...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- بخش نردبان مراحل قدرت -->
+  <section id="cultivation-ladder" class="py-12 px-6 max-w-7xl mx-auto w-full space-y-6">
+    <div>
+      <h3 class="text-lg font-bold text-white flex items-center gap-2">
+        ⚡ نردبان و سلسله‌مراتب قلمروهای قدرت
+      </h3>
+      <p class="text-xs text-slate-400 mt-1">روی هر مرحله کلیک کنید تا تمام ساکنان آن سطح فیلتر شوند</p>
+    </div>
+
+    <div id="realmLadderContainer" class="flex gap-3 overflow-x-auto pb-2">
+      <!-- با جاوااسکریپت تزریق می‌شود -->
+    </div>
+  </section>
+
+  <!-- بخش چهره‌های شاخص -->
+  <section id="featured-section" class="py-10 px-6 max-w-7xl mx-auto w-full space-y-6">
+    <h3 class="text-lg font-bold text-white flex items-center gap-2">
+      ⭐ چهره‌های سرنوشت‌ساز و محوری
+    </h3>
+
+    <div id="featuredContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <!-- با جاوااسکریپت تزریق می‌شود -->
+    </div>
+  </section>
+
+  <!-- کاوشگر کامل رمان -->
+  <section id="catalog-section" class="py-12 px-6 max-w-7xl mx-auto w-full space-y-6">
+    <div class="border-b border-slate-800 pb-4">
+      <h3 class="text-xl font-bold text-white">📚 آرشیو و کاوشگر کلیه موجودیت‌ها</h3>
+      <p class="text-xs text-slate-400 mt-1">فیلترهای همزمان و سریع بدون لگ با معماری استاتیک</p>
+    </div>
+
+    <!-- فیلترها -->
+    <div class="bg-[#111827] border border-slate-800 rounded-xl p-4 space-y-4 shadow-xl">
+      <div class="flex items-center gap-2 overflow-x-auto pb-1 text-xs border-b border-slate-800/60">
+        <button onclick="setCategory('ALL', this)" class="cat-btn px-4 py-2 rounded-lg font-bold bg-sky-600 text-white">همه</button>
+        <button onclick="setCategory('Character', this)" class="cat-btn px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">👤 شخصیت‌ها</button>
+        <button onclick="setCategory('Artifact', this)" class="cat-btn px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">⚔️ سلاح و گنجینه</button>
+        <button onclick="setCategory('Technique', this)" class="cat-btn px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">📜 فنون و مهارت‌ها</button>
+        <button onclick="setCategory('Location', this)" class="cat-btn px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">🗺️ مکان‌ها</button>
+        <button onclick="setCategory('Faction', this)" class="cat-btn px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800">🏯 فرقه‌ها</button>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 text-xs">
+        <div class="flex items-center gap-1.5 bg-[#090d18] border border-slate-800 rounded-lg px-2.5 py-1.5">
+          <span class="text-slate-400 text-[11px] whitespace-nowrap">قلمرو:</span>
+          <select id="realmFilter" onchange="renderGrid(1)" class="w-full bg-[#111827] text-slate-100 text-xs focus:outline-none cursor-pointer py-1 px-1.5 rounded border border-slate-700">
+            <option value="ALL">همه مراحل</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-1.5 bg-[#090d18] border border-slate-800 rounded-lg px-2.5 py-1.5">
+          <span class="text-slate-400 text-[11px] whitespace-nowrap">جنسیت:</span>
+          <select id="genderFilter" onchange="renderGrid(1)" class="w-full bg-[#111827] text-slate-100 text-xs focus:outline-none cursor-pointer py-1 px-1.5 rounded border border-slate-700">
+            <option value="ALL">همه</option>
+            <option value="مرد">♂ مرد</option>
+            <option value="زن">♀ زن</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-1.5 bg-[#090d18] border border-slate-800 rounded-lg px-2.5 py-1.5">
+          <span class="text-slate-400 text-[11px] whitespace-nowrap">وضعیت:</span>
+          <select id="statusFilter" onchange="renderGrid(1)" class="w-full bg-[#111827] text-slate-100 text-xs focus:outline-none cursor-pointer py-1 px-1.5 rounded border border-slate-700">
+            <option value="ALL">همه</option>
+            <option value="زنده">🟢 زنده</option>
+            <option value="متوفی">🔴 متوفی</option>
+          </select>
+        </div>
+
+        <div class="flex items-center gap-1.5 bg-[#090d18] border border-slate-800 rounded-lg px-2.5 py-1.5">
+          <span class="text-slate-400 text-[11px] whitespace-nowrap">مرتب‌سازی:</span>
+          <select id="sortFilter" onchange="renderGrid(1)" class="w-full bg-[#111827] text-slate-100 text-xs focus:outline-none cursor-pointer py-1 px-1.5 rounded border border-slate-700">
+            <option value="power">بالاترین سطح قدرت</option>
+            <option value="last_ch">آخرین فصل حضور</option>
+            <option value="first_ch">نخستین فصل حضور</option>
+            <option value="name">الفبای نام</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- گرید کارت‌ها -->
+    <div id="catalogGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"></div>
+
+    <!-- صفحه‌بندی -->
+    <div id="paginationBox" class="flex justify-center items-center gap-2 pt-6 text-xs font-mono"></div>
+  </section>
+
+  <footer class="bg-[#090d18] border-t border-slate-800 py-6 text-center text-xs text-slate-500 mt-auto">
+    دانشنامه رسمی فندوم رمان · میزبانی‌شده روی GitHub Pages · بدون سرور و ۱۰۰٪ رایگان
+  </footer>
+
+  <script>
+    let fullCatalog = [];
+    let currentCategory = 'ALL';
+    const ITEMS_PER_PAGE = 24;
+
+    // بارگذاری داده‌های استاتیک در بدو ورود
+    async function initApp() {
+      try {
+        const [statsRes, catRes] = await Promise.all([
+          fetch('data/stats.json'),
+          fetch('data/catalog.json')
+        ]);
+        
+        const stats = await statsRes.json();
+        const catData = await catRes.json();
+
+        fullCatalog = catData.catalog;
+
+        // پر کردن آمار هدر
+        document.getElementById('statChapters').innerText = stats.chapters.toLocaleString('fa-IR');
+        document.getElementById('statCharacters').innerText = stats.characters.toLocaleString('fa-IR');
+        document.getElementById('statArtifacts').innerText = stats.artifacts.toLocaleString('fa-IR');
+        document.getElementById('statTechniques').innerText = stats.techniques.toLocaleString('fa-IR');
+
+        // نردبان قدرت
+        const ladderBox = document.getElementById('realmLadderContainer');
+        const realmFilter = document.getElementById('realmFilter');
+
+        stats.realm_stats.forEach(r => {
+          ladderBox.innerHTML += `
+            <div onclick="selectRealmLadder('${r.current_realm}')" 
+                 class="shrink-0 bg-[#111827] hover:bg-[#1a2538] border border-slate-800 hover:border-sky-500/60 rounded-xl p-3.5 text-center cursor-pointer transition shadow-md group min-w-[130px]">
+              <span class="text-[10px] font-mono text-amber-400 bg-amber-950/80 px-2 py-0.5 rounded border border-amber-800/40">رتبه ${r.current_realm_order}</span>
+              <h4 class="font-bold text-xs text-slate-100 group-hover:text-sky-400 mt-2">${r.current_realm}</h4>
+              <div class="text-[11px] text-slate-400 mt-1 font-mono">${r.cnt} نفر</div>
+            </div>
+          `;
+          realmFilter.innerHTML += `<option value="${r.current_realm}">${r.current_realm} (${r.cnt} نفر)</option>`;
+        });
+
+        // چهره‌های شاخص
+        const featBox = document.getElementById('featuredContainer');
+        catData.featured.forEach(char => {
+          featBox.innerHTML += `
+            <a href="wiki.html?id=${encodeURIComponent(char.zh)}" 
+               class="bg-[#111827] border border-slate-800 hover:border-sky-500/50 rounded-2xl p-4 transition shadow-lg flex flex-col justify-between group hover:-translate-y-1">
+              <div class="space-y-3">
+                <div class="flex items-start justify-between">
+                  <div>
+                    <h4 class="font-extrabold text-sm text-sky-400 group-hover:text-sky-300">${char.fa}</h4>
+                    <span class="text-[11px] font-mono text-slate-500">${char.zh}</span>
+                  </div>
+                  <span class="text-[10px] px-2 py-0.5 rounded font-bold ${char.current_status === 'متوفی' ? 'bg-red-950 text-red-400 border border-red-800/60' : 'bg-emerald-950 text-emerald-400 border border-emerald-800/60'}">
+                    ${char.current_status}
+                  </span>
+                </div>
+                <div class="text-xs space-y-1 text-slate-300 bg-[#090d18] p-2.5 rounded-lg border border-slate-800/60">
+                  <div>قلمرو: <b class="text-amber-400">${char.current_realm}</b></div>
+                  <div>فرقه: <b class="text-slate-200">${char.current_affiliation || 'مستقل'}</b></div>
+                </div>
+                <p class="text-[11px] text-slate-400 leading-relaxed line-clamp-3">${char.short_desc}</p>
+              </div>
+              <div class="pt-3 border-t border-slate-800/60 text-[10px] text-slate-500 font-mono flex justify-between mt-3">
+                <span>فصل ${char.first_chapter} تا ${char.last_chapter}</span>
+                <span class="text-sky-400 font-bold group-hover:underline">ورود به شناسنامه ←</span>
+              </div>
+            </a>
+          `;
+        });
+
+        renderGrid(1);
+
+      } catch (err) {
+        console.error("خطا در بارگذاری داده‌های استاتیک:", err);
+      }
+    }
+
+    // جستجوی زنده در هدر (در کمتر از ۱ میلی‌ثانیه در حافظه)
+    const searchInput = document.getElementById('liveSearchInput');
+    const searchResults = document.getElementById('liveSearchResults');
+
+    searchInput.addEventListener('input', () => {
+      const q = searchInput.value.trim().toLowerCase();
+      if (q.length < 2) {
+        searchResults.classList.add('hidden');
+        return;
+      }
+
+      const matches = fullCatalog.filter(it => 
+        it.fa.toLowerCase().includes(q) || 
+        it.zh.includes(q)
+      ).slice(0, 8);
+
+      if (matches.length === 0) {
+        searchResults.innerHTML = '<div class="p-3 text-xs text-slate-500">موردی یافت نشد.</div>';
+      } else {
+        searchResults.innerHTML = matches.map(it => `
+          <a href="wiki.html?id=${encodeURIComponent(it.zh)}" class="block p-3 hover:bg-slate-800/70 transition flex items-center justify-between">
+            <div>
+              <div class="font-bold text-xs text-sky-400">${it.fa} <span class="text-slate-500 font-mono text-[10px]">(${it.zh})</span></div>
+              <div class="text-[11px] text-slate-400 mt-0.5">${it.current_realm || ''} · ${it.current_affiliation || 'مستقل'}</div>
+            </div>
+            <span class="text-[10px] bg-slate-900 px-2 py-0.5 rounded text-slate-300 border border-slate-800">${it.category}</span>
+          </a>
+        `).join('');
+      }
+      searchResults.classList.remove('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+        searchResults.classList.add('hidden');
+      }
+    });
+
+    function setCategory(cat, btn) {
+      currentCategory = cat;
+      document.querySelectorAll('.cat-btn').forEach(b => {
+        b.className = 'cat-btn px-4 py-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800';
+      });
+      btn.className = 'cat-btn px-4 py-2 rounded-lg font-bold bg-sky-600 text-white';
+      renderGrid(1);
+    }
+
+    function selectRealmLadder(realmName) {
+      document.getElementById('realmFilter').value = realmName;
+      document.getElementById('catalog-section').scrollIntoView({ behavior: 'smooth' });
+      renderGrid(1);
+    }
+
+    // رندر هوشمند با صفحه‌بندی (ضد لگ و بسیار روان)
+    function renderGrid(page = 1) {
+      const realm = document.getElementById('realmFilter').value;
+      const gender = document.getElementById('genderFilter').value;
+      const status = document.getElementById('statusFilter').value;
+      const sort = document.getElementById('sortFilter').value;
+
+      let filtered = fullCatalog.filter(it => {
+        const catMatch = (currentCategory === 'ALL' || it.category === currentCategory);
+        const realmMatch = (realm === 'ALL' || it.current_realm === realm);
+        const genderMatch = (gender === 'ALL' || it.gender === gender);
+        const statusMatch = (status === 'ALL' || it.current_status === status);
+        return catMatch && realmMatch && genderMatch && statusMatch;
+      });
+
+      // مرتب‌سازی
+      filtered.sort((a, b) => {
+        if (sort === 'power') return (b.current_realm_order || 0) - (a.current_realm_order || 0);
+        if (sort === 'last_ch') return b.last_chapter - a.last_chapter;
+        if (sort === 'first_ch') return a.first_chapter - b.first_chapter;
+        if (sort === 'name') return a.fa.localeCompare(b.fa, 'fa');
+        return 0;
+      });
+
+      const total = filtered.length;
+      const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
+      const start = (page - 1) * ITEMS_PER_PAGE;
+      const pageItems = filtered.slice(start, start + ITEMS_PER_PAGE);
+
+      const grid = document.getElementById('catalogGrid');
+      if (pageItems.length === 0) {
+        grid.innerHTML = '<div class="col-span-full text-center py-12 text-xs text-slate-500 bg-[#111827] rounded-xl border border-slate-800">هیچ مدخلی با این فیلترها یافت نشد.</div>';
+        document.getElementById('paginationBox').innerHTML = '';
+        return;
+      }
+
+      grid.innerHTML = pageItems.map(it => `
+        <a href="wiki.html?id=${encodeURIComponent(it.zh)}" class="bg-[#111827] border border-slate-800 hover:border-sky-500/50 rounded-xl p-4 transition shadow flex flex-col justify-between group">
+          <div class="space-y-2">
+            <div class="flex items-start justify-between">
+              <div>
+                <h4 class="font-bold text-xs text-sky-400 group-hover:text-sky-300">${it.fa}</h4>
+                <span class="text-[10px] font-mono text-slate-500">${it.zh}</span>
+              </div>
+              <span class="text-[9px] px-1.5 py-0.5 rounded font-bold ${it.current_status === 'متوفی' ? 'bg-red-950 text-red-400' : 'bg-emerald-950 text-emerald-400'}">${it.current_status}</span>
+            </div>
+            <div class="text-[11px] text-slate-300 bg-[#070b14] p-2 rounded border border-slate-800/80">
+              <div>قلمرو: <b class="text-amber-400">${it.current_realm}</b></div>
+              <div>فرقه: <b>${it.current_affiliation || 'مستقل'}</b></div>
+            </div>
+          </div>
+          <div class="pt-2.5 mt-2 border-t border-slate-800/60 text-[10px] text-slate-500 font-mono flex justify-between items-center">
+            <span>فصل ${it.first_chapter} تا ${it.last_chapter}</span>
+            <span class="text-sky-400 font-bold">ورود ←</span>
+          </div>
+        </a>
+      `).join('');
+
+      // دکمه‌های صفحه‌بندی
+      const pagBox = document.getElementById('paginationBox');
+      let pagHtml = '';
+      if (totalPages > 1) {
+        for (let i = 1; i <= Math.min(totalPages, 10); i++) {
+          pagHtml += `<button onclick="renderGrid(${i})" class="px-3 py-1.5 rounded ${i === page ? 'bg-sky-600 text-white font-bold' : 'bg-[#111827] text-slate-400 border border-slate-800'}">${i}</button>`;
+        }
+      }
+      pagBox.innerHTML = pagHtml;
+    }
+
+    initApp();
+  </script>
+</body>
+</html>
